@@ -2,10 +2,10 @@
     console.log("🚀 Бот запущен! Мониторинг сделок начался.");
 
     const TELEGRAM_BOT_TOKEN = "8034311364:AAGZZJVPPjLtA-Ofy3xFTDRW50WS_bAHMsQ";
-    const TELEGRAM_CHAT_ID = "7393151782"; // Твой Chat ID
-    const CHECK_INTERVAL = 40000; // Проверка каждые 40 секунд
-    const STATUS_INTERVAL = 5 * 60 * 1000; // Сообщение о состоянии каждые 5 минут
-    const LOG_INTERVAL = 30 * 60 * 1000; // Логи каждые 30 минут
+    const TELEGRAM_CHAT_ID = "7393151782";
+    const CHECK_INTERVAL = 40000;
+    const STATUS_INTERVAL = 5 * 60 * 1000;
+    const LOG_INTERVAL = 30 * 60 * 1000;
     const BASE_URL = "https://fkwallet.io/personal/p2p/trades?type=sell&page=1";
     let lastDeals = new Set();
     let isFirstRun = true;
@@ -41,11 +41,11 @@
                 const limit = columns[3]?.innerText.trim() || "❌ Не найдено";
                 const tradeLink = `${BASE_URL}#trade-${index + 1}`;
 
-                // Исправленная обработка процента
+
                 const discountMatches = discountText.match(/(\d+(\.\d+)?)%/);
                 const discount = discountMatches ? parseFloat(discountMatches[1]) : 0;
 
-                if (discount >= 10) {  // Теперь точно >= 10%
+                if (discount >= 10) {
                     const dealKey = `${seller}-${price}-${discount}`;
                     if (!lastDeals.has(dealKey)) {
                         lastDeals.add(dealKey);
@@ -91,7 +91,7 @@
         if (logs.length > 0) {
             const logMessage = `📜 Логи сделок за 30 минут:\n\n` + logs.join("\n");
             await sendToTelegram(logMessage);
-            logs = []; // Очищаем логи
+            logs = [];
         }
     }
 
